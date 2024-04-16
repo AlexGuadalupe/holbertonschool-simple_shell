@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include "main.h"
 
 #define MAX_CMD_LEN 256
 #define PROMPT "simple_shell: "
