@@ -39,7 +39,7 @@ argv[1] = NULL;
 
 if (execve(cmd, argv, envp) == -1)
 {
-perror("Error executing command");
+perror(cmd);
 }
 }
 return (0);
