@@ -2,6 +2,8 @@
 #define SHELL_H
 
 #define MAX_INPUT_LENGTH 1024
+#define MAX_PATH_LENGHT 1024
+#define MAX_PATH_DIRS 100
 
 #include <stdio.h>
 #include <string.h>
