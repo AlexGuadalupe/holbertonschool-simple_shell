@@ -9,12 +9,7 @@ void sigintH(int signum)
 	}
 }
 
-/**
- * str_concat - Concatenate two strings
- * @s1: String 1
- * @s2: String 1
- * Return: Pointer to the concatenated string
- */
+
 char *str_concat(char *s1, char *s2)
 {
 	char *s;
