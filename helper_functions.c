@@ -46,13 +46,7 @@ char *str_concat(char *s1, char *s2)
 	return (s);
 }
 
-/**
- * _realloc - Reallocate a memory block
- * @ptr: Pointer to array
- * @old_size: Old size
- * @new_size: New size
- * Return: A pointer to the allocated memory
- */
+
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	char *s;
