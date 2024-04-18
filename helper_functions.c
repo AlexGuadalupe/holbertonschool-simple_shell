@@ -1,6 +1,9 @@
 #include "shell.h"
 
-
+/**
+ * Signal handler for SIGINT (Ctrl+C)
+ * Writing prompt after Ctrl+C interruption
+ */
 void sigintH(int signum)
 {
 	if (signum == SIGINT)
@@ -9,7 +12,16 @@ void sigintH(int signum)
 	}
 }
 
-
+/**
+ * Function to concatenate two strings
+ * Pointer to the concatenated string
+ * Index variables
+ * If either string is NULL, set it to an empty string
+ * Calculating length of the two string
+ * Increase length by 1 to accommodate null terminator
+ * Allocating memory for the concatenated string
+ * Return NULL if malloc fails
+ */
 char *str_concat(char *s1, char *s2)
 {
 	char *s;
@@ -46,7 +58,21 @@ char *str_concat(char *s1, char *s2)
 	return (s);
 }
 
-
+/**
+ * Custom reallocation function
+ * Pointer to the reallocated memory
+ * Casted pointer for manipulation
+ * Index variable
+ * Cast the pointer to char*
+ * If ptr is NULL, allocate memory of new_size
+ * If new_size is 0 and ptr is not NULL, free ptr and return NULL
+ * If old_size equals new_size, return ptr
+ * Allocate memory for the reallocated memory
+ * Free s if malloc fails
+ * Copy contents of ptr to the reallocated memory
+ * Free the original memory
+ * Return the reallocated memory
+ */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	char *s;
