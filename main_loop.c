@@ -1,46 +1,56 @@
 #include "shell.h"
 
+int main() {
+	char input[BUFSIZE]; /* BUFSIZE defined in shell.h*/
+	ssize_t n;
+	int status;
 
-int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
-{
-	char **arguments = NULL;
-	char *input_stdin = NULL; 
-	int status_return = 1, exit_status = 0;
-	size_t size = 0; 
-	ssize_t n = 0; 
+	while (1) {
+		/* Display colored prompt*/
+		printf("\033[0;32m"); /* Green color*/
+		printf("#(ಠ_ಠ)->$ ");
+		printf("\033[0m"); /* Reset color*/
 
-	
-	while (status_return && n != EOF) 
-	{
-		size = 0; 
-		
-		status_return = isatty(STDIN_FILENO);
-		if (status_return)
-			write(STDOUT_FILENO, "#(ಠ_ಠ)->$ ", 14); 
-		
-		signal(SIGINT, sigintH);
-		
-		n = getline(&input_stdin, &size, stdin);
-		if (n == -1) 
-		{
-			free(input_stdin);
+		/* Read command from user*/
+		n = read(STDIN_FILENO, input, BUFSIZE);
+
+		/* Check for end of file (Ctrl+D)*/
+		if (n == 0)
 			break;
+
+		/* Remove trailing newline*/
+		if (input[n - 1] == '\n')
+			input[n - 1] = '\0';
+
+		/* Execute command using execve*/
+		pid_t pid = fork();
+		if (pid == -1) {
+			/* Error handling for fork failure*/
+			perror("fork failed");
+			exit(EXIT_FAILURE);
+		} else if (pid == 0) {
+			/* Child process*/
+			if (execve(input, NULL, environ) == -1) {
+				/* Error handling for execve failure*/
+				if (errno == EACCES) {
+					/* Permission denied*/
+					printf("\033[0;31m"); /* Red color*/
+					printf("Permission denied: %s\n", input);
+					printf("\033[0m"); /* Reset color*/
+				} else {
+					/* Command not found*/
+					printf("\033[0;31m"); /* Red color*/
+					printf("Command not found: %s\n", input);
+					printf("\033[0m"); /* Reset color*/
+				}
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			/* Parent process*/
+			waitpid(pid, &status, 0);
 		}
-		
-		if (validate_spaces(input_stdin))
-		{
-			free(input_stdin);
-			continue;
-		}
-		
-		arguments = hsh_tokenizer(input_stdin);
-		if (*arguments[0] == '\0')
-			continue;
-		
-		status_return = hsh_execute_builtins(arguments, input_stdin,
-				argv, &exit_status);
-		free(input_stdin);
-		free(arguments);
 	}
-	return (0);
+
+	return 0;
 }
+
