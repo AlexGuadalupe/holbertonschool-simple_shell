@@ -1,32 +1,5 @@
 #include "shell.h"
 
-/**
- * hsh_exit - Exit the shell
- * Return: Always returns 0 to indicate successful execution
- */
-int hsh_exit(void)
-{
-	exit(EXIT_SUCCESS);
-}
-
-/**
- * hsh_env - Print the current environment
- * Return: Always returns 0 to indicate successful execution
- */
-int hsh_env(void)
-{
-    extern char **environ; /* Access to the environment variables*/
-    char **env = environ;  /* Pointer to traverse the environment variables*/
-
-    while (*env != NULL)
-    {
-        printf("%s\n", *env);
-        env++;
-    }
-
-    return 0;
-}
-
 int hsh_cd(char **args, char *input_stdin, int *exit_status)
 {
 	int stat; 
@@ -112,49 +85,29 @@ int hsh_unsetenv(char **args,  char *input_stdin, int *exit_status)
 	return (1);
 }
 
-
-int hsh_env(char **args, char *input_stdin, int *exit_status)
+/**
+ * hsh_exit - Exit the shell
+ * Return: Always returns 0 to indicate successful execution
+ */
+int hsh_exit(void)
 {
-	int i = 0;
-
-	(void)args;
-	(void)input_stdin;
-	(void)exit_status;
-
-
-	if (environ[i] == NULL)
-	{
-		printf("%s", "The built in env is empty");
-		return (1);
-	}
-	for (i = 0; environ[i]; i++)
-		printf("%s\n", environ[i]);
-
-	return (1);
+	exit(EXIT_SUCCESS);
 }
 
-
-int hsh_exit(char **args, char *input_stdin, int *exit_status)
+/**
+ * hsh_env - Print the current environment
+ * Return: Always returns 0 to indicate successful execution
+ */
+int hsh_env(void)
 {
-	int output_exit = 0;
+	extern char **environ; /* Access to the environment variables*/
+	char **env = environ;  /* Pointer to traverse the environment variables*/
 
-	(void)args;
-	(void)input_stdin;
-	(void)exit_status;
+	while (*env != NULL)
+	{
+		printf("%s\n", *env);
+		env++;
+	}
 
-	if (args[1] == NULL)
-	{
-		free(args);
-		free(input_stdin);
-		exit(*exit_status);
-	}
-	if (args[2] != NULL)
-	{
-		fprintf(stderr, "exit: too many arguments\n");
-		return (0);
-	}
-	output_exit = atoi(args[1]);
-	free(args);
-	free(input_stdin);
-	exit(output_exit);
+	return 0;
 }

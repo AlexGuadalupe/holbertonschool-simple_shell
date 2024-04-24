@@ -61,8 +61,6 @@ int hsh_execute_builtins(char **args, char *input_stdin,
 int hsh_cd(char **args, char *input_stdin, int *exit_status);
 int hsh_setenv(char **args,  char *input_stdin, int *exit_status);
 int hsh_unsetenv(char **args,  char *input_stdin, int *exit_status);
-int hsh_env(char **args, char *input_stdin, int *exit_status);
-int hsh_exit(char **args, char *input_stdin, int *exit_status);
 
 /* Function prototypes*/
 char *_getenv(const char *name);
