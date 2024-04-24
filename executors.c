@@ -1,76 +1,53 @@
 #include "shell.h"
 
+int execute_command(char **args) {
+	char *path = _getenv("PATH");
+	if (!path) {
+		fprintf(stderr, "Error: PATH variable not found.\n");
+		return 1;
+	}
 
-int hsh_execute(char **arguments, char **argv, int *exit_status)
-{
-	pid_t pid;
-	int status; 
-	char *new_arguments;
+	char *token;
+	char *full_path = malloc(strlen(path) + strlen(args[0]) + 2);
+	if (!full_path) {
+		perror("malloc");
+		return 1;
+	}
+	strcpy(full_path, path);
 
-	
-	new_arguments = validate_input(arguments, argv);
-	if (strcmp(new_arguments, "Fail access") == 0)
-		return (1);
-
-	pid = fork(); 
-	if (pid == 0) 
-	{
-		
-		if (execve(new_arguments, arguments, environ) == -1)
-		{
-			perror("execve fail");
-			
-			exit(EXIT_FAILURE);
+	token = strtok(full_path, ":");
+	while (token) {
+		char *cmd_path = malloc(strlen(token) + strlen(args[0]) + 2);
+		if (!cmd_path) {
+			perror("malloc");
+			free(full_path);
+			return 1;
 		}
+		sprintf(cmd_path, "%s/%s", token, args[0]);
+		if (access(cmd_path, X_OK) == 0) {
+			pid_t pid = fork();
+			if (pid == -1) {
+				perror("fork");
+				free(cmd_path);
+				free(full_path);
+				return 1;
+			} else if (pid == 0) {
+				execve(cmd_path, args, NULL);
+				perror("execve");
+				exit(EXIT_FAILURE);
+			} else {
+				wait(NULL);
+				free(cmd_path);
+				free(full_path);
+				return 0;
+			}
+		}
+		free(cmd_path);
+		token = strtok(NULL, ":");
 	}
-	else if (pid < 0) 
-	{
-		perror("Error forking");
-		free(new_arguments);
-		return (1);
-	}
-	else 
-	{
-		
-		waitpid(-1, &status, 0);
-	
-		if (WIFEXITED(status))
-			
-			*exit_status = WEXITSTATUS(status);
-		
-		if (arguments[0][0] != '/' && arguments[0][0] != '.')
-			free(new_arguments);
-		return (1);
-	}
-	return (1);
+
+	fprintf(stderr, "Error: command '%s' not found\n", args[0]);
+	free(full_path);
+	return 1;
 }
 
-
-int hsh_execute_builtins(char **args, char *input_stdin,
-			 char **argv, int *exit_status)
-{
-	int i = 0;
-
-	
-	choose_builtins_t options[] = {
-		{"exit", hsh_exit},
-		{"env", hsh_env},
-		{"cd", hsh_cd},
-		{"setenv", hsh_setenv},
-		{"unsetenv", hsh_unsetenv},
-		{NULL, NULL}
-	};
-
-	while (options[i].name_builtin)
-	{
-		
-		if (strcmp(options[i].name_builtin, args[0]) == 0)
-		{
-			
-			return ((int)((*options[i].func_builtin)(args, input_stdin, exit_status)));
-		}
-		i++;
-	}
-	
-	return (hsh_execute(args, argv, exit_status));
-}

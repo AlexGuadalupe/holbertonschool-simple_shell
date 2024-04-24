@@ -64,5 +64,9 @@ int hsh_unsetenv(char **args,  char *input_stdin, int *exit_status);
 int hsh_env(char **args, char *input_stdin, int *exit_status);
 int hsh_exit(char **args, char *input_stdin, int *exit_status);
 
+/* Function prototypes*/
+char *_getenv(const char *name);
+char **parse_input(char *input);
+int execute_command(char **args);
 
 #endif /* SIMPLE_SHELL_H */
