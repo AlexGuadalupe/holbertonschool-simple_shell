@@ -1,6 +1,11 @@
 #include "shell.h"
 
 int execute_command(char **args) {
+	/* Check if the command is "exit"*/
+	if (strcmp(args[0], "exit") == 0) {
+		return hsh_exit(); /* Call the exit built-in function*/
+	}
+
 	char *path = _getenv("PATH");
 	if (!path) {
 		fprintf(stderr, "Error: PATH variable not found.\n");
