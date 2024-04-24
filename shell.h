@@ -68,6 +68,7 @@ int hsh_setenv(char **args,  char *input_stdin, int *exit_status);
 int hsh_unsetenv(char **args,  char *input_stdin, int *exit_status);
 int hsh_env(char **args, char *input_stdin, int *exit_status);
 int hsh_exit(char **args, char *input_stdin, int *exit_status);
+int main_loop(int argc __attribute__((unused)), char **argv __attribute__((unused)));
 
 
 #endif /* SIMPLE_SHELL_H */

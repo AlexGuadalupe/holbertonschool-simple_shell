@@ -1,7 +1,7 @@
 #include "shell.h"
 
 
-int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
+int main_loop(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 {
 	char **arguments = NULL;
 	char *input_stdin = NULL; 
