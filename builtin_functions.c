@@ -9,6 +9,24 @@ int hsh_exit(void)
 	exit(EXIT_SUCCESS);
 }
 
+/**
+ * hsh_env - Print the current environment
+ * Return: Always returns 0 to indicate successful execution
+ */
+int hsh_env(void)
+{
+    extern char **environ; /* Access to the environment variables*/
+    char **env = environ;  /* Pointer to traverse the environment variables*/
+
+    while (*env != NULL)
+    {
+        printf("%s\n", *env);
+        env++;
+    }
+
+    return 0;
+}
+
 int hsh_cd(char **args, char *input_stdin, int *exit_status)
 {
 	int stat; 

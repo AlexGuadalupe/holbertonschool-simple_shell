@@ -69,5 +69,6 @@ char *_getenv(const char *name);
 char **parse_input(char *input);
 int execute_command(char **args);
 int hsh_exit(void);
+int hsh_env(void); 
 
 #endif /* SIMPLE_SHELL_H */

@@ -33,35 +33,43 @@ int main() {
 		}
 		args[i] = NULL; /* Mark the end of arguments with NULL*/
 
-		/* Execute command using execve*/
-		pid_t pid = fork();
-		if (pid == -1) {
-			/* Error handling for fork failure*/
-			perror("fork failed");
-			exit(EXIT_FAILURE);
-		} else if (pid == 0) {
-			/* Child process*/
-			if (execve(input, NULL, environ) == -1) {
-				/* Error handling for execve failure*/
-				if (errno == EACCES) {
-					/* Permission denied*/
-					printf("\033[0;31m"); /* Red color*/
-					printf("Permission denied: %s\n", input);
-					printf("\033[0m"); /* Reset color*/
-				} else {
-					/* Command not found*/
-					printf("\033[0;31m"); /* Red color*/
-					printf("Command not found: %s\n", input);
-					printf("\033[0m"); /* Reset color*/
-				}
-				exit(EXIT_FAILURE);
-			}
+		/* Check for built-in commands */
+		if (strcmp(args[0], "exit") == 0) {
+			/* Call exit built-in function */
+			hsh_exit();
+		} else if (strcmp(args[0], "env") == 0) {
+			/* Call env built-in function */
+			hsh_env();
 		} else {
-			/* Parent process*/
-			waitpid(pid, &status, 0);
+			/* Execute command using execve*/
+			pid_t pid = fork();
+			if (pid == -1) {
+				/* Error handling for fork failure*/
+				perror("fork failed");
+				exit(EXIT_FAILURE);
+			} else if (pid == 0) {
+				/* Child process*/
+				if (execve(input, NULL, environ) == -1) {
+					/* Error handling for execve failure*/
+					if (errno == EACCES) {
+						/* Permission denied*/
+						printf("\033[0;31m"); /* Red color*/
+						printf("Permission denied: %s\n", input);
+						printf("\033[0m"); /* Reset color*/
+					} else {
+						/* Command not found*/
+						printf("\033[0;31m"); /* Red color*/
+						printf("Command not found: %s\n", input);
+						printf("\033[0m"); /* Reset color*/
+					}
+					exit(EXIT_FAILURE);
+				}
+			} else {
+				/* Parent process*/
+				waitpid(pid, &status, 0);
+			}
 		}
-	}
 
-	return 0;
-}
+		return 0;
+	}
 
