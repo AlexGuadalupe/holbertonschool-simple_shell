@@ -90,6 +90,7 @@ int path_function(void)
 	int num_dirs, i;
 	char *path_str = get_path();
 	char **path_dirs = parse_path(path_str, &num_dirs);
+	char *full_path = NULL;
 
 	if (path_str == NULL)
 	{
@@ -107,13 +108,14 @@ int path_function(void)
 	if (full_path != NULL)
 	{
 		printf("Full path of 'bin': %s\n", full_path);
+		system("/bin/ls -l");
 		free(full_path);
 	}
 	else
 	{
 		printf("'bin' not found in ther specified directories.\n");
 	}
-	
+
 	for (i = 0; i < num_dirs; i++)
 	{
 		free(path_dirs[i]);
