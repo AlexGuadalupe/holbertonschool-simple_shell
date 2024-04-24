@@ -39,8 +39,7 @@ typedef struct choose_builtin
  * @argv: Array of arguments
  * Return: Always 0 on success
  */
-int main(int argc __attribute__((unused)),
-	 char **argv __attribute__((unused)));
+int main();
 
 /* external variable to access the environment list */
 extern char **environ;

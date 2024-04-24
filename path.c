@@ -68,7 +68,7 @@ char *search_path(char *command, char *path_dirs[], int num_dirs)
 
 	for (i = 0; i < num_dirs; i++)
 	{
-		char path[MAX_PATH_LENGTH];
+		char path[MAX_PATH_LENGHT];
 
 		snprintf(path, sizeof(path), "%s/%s", path_dirs[i], command);
 		if (access(path, X_OK) == 0)
