@@ -103,11 +103,17 @@ int path_function(void)
 		return (1);
 	}
 
-	for (i = 0; i < num_dirs; i++)
+	full_path = search_path("bin", path_dirs, num_dirs);
+	if (full_path != NULL)
 	{
-		printf("Directory %d: %s\n", i + 1, path_dirs[i]);
+		printf("Full path of 'bin': %s\n", full_path);
+		free(full_path);
 	}
-
+	else
+	{
+		printf("'bin' not found in ther specified directories.\n");
+	}
+	
 	for (i = 0; i < num_dirs; i++)
 	{
 		free(path_dirs[i]);
