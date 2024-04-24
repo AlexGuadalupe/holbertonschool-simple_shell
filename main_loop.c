@@ -21,6 +21,17 @@ int main() {
 		/* Remove trailing newline*/
 		if (input[n - 1] == '\n')
 			input[n - 1] = '\0';
+		/* Tokenize the input*/
+		char *token;
+		char *args[ARG_MAX]; /* ARG_MAX defined in limits.h*/
+		int i = 0;
+
+		token = strtok(input, " ");
+		while (token != NULL) {
+			args[i++] = token;
+			token = strtok(NULL, " ");
+		}
+		args[i] = NULL; /* Mark the end of arguments with NULL*/
 
 		/* Execute command using execve*/
 		pid_t pid = fork();
