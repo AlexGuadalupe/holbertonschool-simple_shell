@@ -1,77 +1,59 @@
-# Shell Functions README
+#!/bin/bash
 
-This repository contains several C functions that are useful for building a simple shell program. These functions handle tasks such as tokenizing input strings, validating user input, string manipulation, and signal handling.
+# Contributors
+contributors=(
+    "Alexandra Guadalupe <9035@holbertonstudents.com>"
+    "Roger Rosado <Rogergbusiness34@gmail.com>"
+    "Saul Vera <saul.vera787@gmail.com>"
+)
+
+# Function to generate README content
+generate_readme() {
+    cat << EOF
+# Simple Shell Project
+
+## Contributors
+$(printf -- "- %s\n" "${contributors[@]}")
+
+## Overview
+This is a simple shell implementation written in C. It provides basic shell functionalities such as executing commands, handling environment variables, and searching for commands in the PATH.
 
 ## Files
+- \`shell.h\`: Header file containing function prototypes, macro definitions, and necessary includes for the shell.
+- \`func_build.c\`: Source file containing implementations of functions related to environment variables and string manipulation.
+- \`search_path.c\`: Source file containing the implementation of a function to search for the full path of a command in the PATH environment variable.
+- \`simple_shell.c\`: Main source file containing the implementation of the main shell loop and functions to handle commands.
 
-1. **shell.h**: Header file containing function declarations and necessary includes.
-2. **helper_functions.c**: This code defines a signal handler for Ctrl+C interrupts in a shell program, along with functions for string concatenation and custom memory reallocation.
-3. **tokenizers.c**: This code defines two functions, hsh_tokenizer and tokenizer_path, which tokenize input strings based on specific delimiters and return arrays of tokens.
-4. **validators.c**: This code comprises two functions, validate_input and validate_spaces, used for input validation in a shell program. The validate_input function checks if specified files exist in the system or in the PATH environment variable, while validate_spaces verifies if an input string contains only whitespace characters. 
-5. **README.md**: This README file.
-6. **man_1_simple_shell**: This is a manual page.
-7. **AUTORS**: This file lists all contributors to the repository.
+## Compilation
+To compile the shell, simply run the following command in your terminal:
 
-## Functions
-
-### 1. `hsh_tokenizer`
-
-- **Description**: Tokenizes input strings based on a specific delimiter.
-- **Parameters**: 
-  - `char *input`: Input string to be tokenized.
-- **Return**: Array of tokens.
-
-### 2. `tokenizer_path`
-
-- **Description**: Tokenizes input strings based on a different delimiter than `hsh_tokenizer`.
-- **Parameters**: 
-  - `char *input`: Input string to be tokenized.
-- **Return**: Array of tokens.
-
-### 3. `validate_input`
-
-- **Description**: Validates user input arguments and checks for the existence of specified files.
-- **Parameters**: 
-  - `char **arguments`: Array of input arguments.
-- **Return**: Validated input or error message.
-
-### 4. `validate_spaces`
-
-- **Description**: Checks if a given input string contains only whitespace characters.
-- **Parameters**: 
-  - `char *input`: Input string to be validated.
-- **Return**: Flag indicating presence of spaces.
-
-### 5. `sigintH`
-
-- **Description**: Signal handler for SIGINT (Ctrl+C) that writes a custom prompt after interruption.
-- **Parameters**: 
-  - `int signum`: Signal number.
-- **Return**: None.
-
-### 6. `str_concat`
-
-- **Description**: Concatenates two strings and returns a pointer to the concatenated string.
-- **Parameters**: 
-  - `char *s1`: First string.
-  - `char *s2`: Second string.
-- **Return**: Pointer to the concatenated string.
-
-### 7. `_realloc`
-
-- **Description**: Custom memory reallocation function to resize dynamically allocated memory blocks.
-- **Parameters**: 
-  - `void *ptr`: Pointer to memory block to be reallocated.
-  - `unsigned int old_size`: Old size of the memory block.
-  - `unsigned int new_size`: New size of the memory block.
-- **Return**: Pointer to the reallocated memory.
+\`\`\`bash
+gcc -Wall -Werror -Wextra -pedantic *.c -o shell
+\`\`\`
 
 ## Usage
+After compilation, you can run the shell by executing the compiled binary:
 
-To use these functions in your shell program:
+\`\`\`bash
+./shell
+\`\`\`
 
-1. Include the `shell.h` header file in your source files.
-2. Implement the necessary logic to call these functions as required by your shell program.
+Once the shell is running, you can enter commands just like in a regular shell. Some built-in commands are also available:
+- \`env\`: Print the environment variables.
+- \`exit\`: Exit the shell.
 
-## 
+## Example
+\`\`\`
+$ ./shell
+simple_shell$ ls
+README.md  func_build.c  search_path.c  shell  shell.h  simple_shell.c
+simple_shell$ env
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+PWD=/home/user/simple_shell
+...
+simple_shell$ exit
+$
+\`\`\`
+EOF
+}
 

@@ -4,7 +4,9 @@
  * print_env - Prints the environment variables.
  * This function does not take any parameters and does not return a value.
  */
-void print_env(void) { 
+
+void print_env(void)
+{
 	char *s = environ[0];
 	int i = 0;
 
@@ -24,7 +26,9 @@ void print_env(void) {
  * Return: An integer less than, equal to, or greater than zero if s1 is found,
  * respectively, to be less than, to match, or be greater than s2.
  */
-int str_cmp(char *string1, const char *string2, int num_chars) { 
+
+int str_cmp(char *string1, const char *string2, int num_chars)
+{
 	char c1, c2;
 
 	while (num_chars--)
@@ -32,6 +36,7 @@ int str_cmp(char *string1, const char *string2, int num_chars) {
 		c1 = *string1++;
 		c2 = *string2++;
 		if (c1 == '\0' || c1 != c2)
+
 			return (c1 > c2 ? 1 : (c1 < c2 ? -1 : 0));
 	}
 	return (0);
@@ -44,7 +49,9 @@ int str_cmp(char *string1, const char *string2, int num_chars) {
  * environment variable,
  * or NULL if the environment variable does not exist.
  */
-char *_getenv(const char *env_var) { 
+
+char *_getenv(const char *env_var)
+{
 	int i = 0;
 
 	for (i = 0; environ[i]; i++)
