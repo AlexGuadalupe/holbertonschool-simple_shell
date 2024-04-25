@@ -9,6 +9,11 @@
 char *search_path(char *command)
 {
 	char *path = strdup(_getenv("PATH"));
+    if (path == NULL)
+		{
+        return NULL;
+    }
+	char *path = strdup(_getenv("PATH"));
 	int i = 0, j = 0;
 	char *path_tokens = strtok(path, ":");
 	char *path_array[100];
