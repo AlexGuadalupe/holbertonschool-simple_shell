@@ -16,7 +16,6 @@ void print_env(void)
 		write(1, "\n", 1);
 		s = environ[++i];
 	}
-	return (0);
 }
 
 /**
@@ -32,7 +31,7 @@ int str_cmp(char *string1, const char *string2, int num_chars)
 {
 	char c1, c2;
 
-	while (n--)
+	while (num_chars--)
 	{
 		c1 = *string1++;
 		c2 = *string2++;
@@ -57,7 +56,7 @@ char *_getenv(const char *env_var)
 
 	for (i = 0; environ[i]; i++)
 	{
-		if (_str_n_cmp(environ[i], var, strlen(env_var)) == 0)
+		if (str_cmp(environ[i], env_var, strlen(env_var)) == 0)
 			return (&environ[i][strlen(env_var)]);
 	}
 	return (NULL);

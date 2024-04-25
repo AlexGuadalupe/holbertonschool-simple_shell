@@ -12,7 +12,7 @@ char *search_path(char *command)
 	int i = 0, j = 0;
 	char *path_tokens = strtok(path, ":");
 	char *path_array[100];
-	char *s2 = cmd;
+	char *s2 = command;
 	char *new_path = NULL;
 	struct stat buf;
 
