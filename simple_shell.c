@@ -6,13 +6,12 @@
  * @argv: argv for command
  * Return: Always 0.
  */
-
 int main(int argc, char *argv[])
 {
-	char *s = NULL;
+	char *input = NULL;
 	size_t buffer_size = 0;
 	ssize_t file_stream = 0;
-	char *name = argv[0];
+	char *program_name = argv[0];
 
 	(void)argc;
 
@@ -20,7 +19,7 @@ int main(int argc, char *argv[])
 	{
 		if (isatty(STDIN_FILENO) == 1)
 			write(1, "simple_shell$ ", 13);
-		file_stream = getline(&s, &buffer_size, stdin);
+		file_stream = getline(&input, &buffer_size, stdin);
 		if (file_stream == -1)
 		{
 			if (isatty(STDIN_FILENO) == 1)
@@ -28,44 +27,44 @@ int main(int argc, char *argv[])
 			break;
 		}
 
-		if (s[file_stream - 1] == '\n')
-			s[file_stream - 1] = '\0';
-		if (*s == '\0')
+		if (input[file_stream - 1] == '\n')
+			input[file_stream - 1] = '\0';
+		if (*input == '\0')
 			continue;
-		if (cmd_read(s, file_stream, name) == 2)
+		if (read_command(input, file_stream, program_name) == 2)
 		{
-			free(s);
+			free(input);
 			exit(EXIT_SUCCESS);
 		}
 	}
-	free(s);
-	s = NULL;
+	free(input);
+	input = NULL;
 	return (0);
 }
 
 /**
- * cmd_read - handles command line and tokenizes it
- *@s: string
- *@file_stream: getline input
- *@name: name of the command
+ * read_command - handles command line and tokenizes it
+ * @input: string
+ * @file_stream: getline input
+ * @program_name: name of the program
  * Return: 0
  */
-int cmd_read(char *s, size_t __attribute__((unused)) file_stream, char *name)
+int read_command(char *input, size_t __attribute__((unused)) file_stream, char *program_name)
 {
 	char *token = NULL;
 	char *cmd_arr[100];
 	int i;
 
-	if (s == NULL)
+	if (input == NULL)
 		return (0);
 
-	if (strcmp(s, "exit") == 0)
+	if (strcmp(input, "exit") == 0)
 		return (2);
 
-	if (strcmp(s, "env") == 0)
+	if (strcmp(input, "env") == 0)
 		return (_printenv());
 
-	token = strtok(s, " "), i = 0;
+	token = strtok(input, " "), i = 0;
 	while (token)
 	{
 		cmd_arr[i++] = token;
@@ -75,35 +74,33 @@ int cmd_read(char *s, size_t __attribute__((unused)) file_stream, char *name)
 		return (0);
 
 	cmd_arr[i] = NULL;
-	return (call_command(cmd_arr, name));
+	return (call_command(cmd_arr, program_name));
 }
 
 /**
  * print_not_found - prints when cmd is not found in path
- *
  * @cmd: a string provided by the stdin
- * @name: name of the command
+ * @program_name: name of the program
  */
-void print_not_found(char *cmd, char *name)
+void print_not_found(char *cmd, char *program_name)
 {
 	if (strcmp(_getenv("PATH"), "") == 0)
 	{
-		fprintf(stderr, "%s: %s: not found\n", name, cmd);
+		fprintf(stderr, "%s: %s: not found\n", program_name, cmd);
 	}
 	else
 	{
-		fprintf(stderr, "%s: %s: command not found\n", name, cmd);
+		fprintf(stderr, "%s: %s: command not found\n", program_name, cmd);
 	}
 }
 
 /**
  * call_command - calls cmd, forks, execve
- *
  * @cmd_arr: a string provided by the stdin
- * @name: name of the command
+ * @program_name: name of the program
  * Return: 0
  */
-int call_command(char *cmd_arr[], char *name)
+int call_command(char *cmd_arr[], char *program_name)
 {
 	char *cmd = cmd_arr[0];
 	struct stat buf;
@@ -115,12 +112,12 @@ int call_command(char *cmd_arr[], char *name)
 	{
 		if (stat(cmd, &buf) == 0)
 		{
-			result = execute_command(cmd_arr, name);
+			result = execute_command(cmd_arr, program_name);
 			return (result);
 		}
 		else
 		{
-			print_not_found(cmd, name);
+			print_not_found(cmd, program_name);
 			return (3);
 		}
 	}
@@ -128,23 +125,23 @@ int call_command(char *cmd_arr[], char *name)
 	exe_path_str = pathfinder(cmd);
 	if (exe_path_str == NULL)
 	{
-		print_not_found(cmd, name);
+		print_not_found(cmd, program_name);
 		return (3);
 	}
 
 	cmd_arr[0] = exe_path_str;
-	result = execute_command(cmd_arr, name);
+	result = execute_command(cmd_arr, program_name);
 	free(exe_path_str);
 	return (result);
 }
+
 /**
  * execute_command - executes the command
- *
  * @cmd_arr: a string provided by the stdin
- * @name: name of the command
+ * @program_name: name of the program
  * Return: 0
  */
-int execute_command(char *cmd_arr[], char *name)
+int execute_command(char *cmd_arr[], char *program_name)
 {
 	pid_t is_child;
 	int status;
@@ -163,7 +160,7 @@ int execute_command(char *cmd_arr[], char *name)
 	{
 		execve(cmd_arr[0], cmd_arr, environ);
 		{
-			perror(name);
+			perror(program_name);
 			exit(1);
 		}
 	}
