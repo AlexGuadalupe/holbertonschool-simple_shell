@@ -1,59 +1,60 @@
-#!/bin/bash
-
-# Contributors
-contributors=(
-    "Alexandra Guadalupe <9035@holbertonstudents.com>"
-    "Roger Rosado <Rogergbusiness34@gmail.com>"
-    "Saul Vera <saul.vera787@gmail.com>"
-)
-
-# Function to generate README content
-generate_readme() {
-    cat << EOF
 # Simple Shell Project
 
+This is a simple shell project developed as part of a Holberton School curriculum. It provides a basic shell interface for users to execute commands.
+
 ## Contributors
-$(printf -- "- %s\n" "${contributors[@]}")
 
-## Overview
-This is a simple shell implementation written in C. It provides basic shell functionalities such as executing commands, handling environment variables, and searching for commands in the PATH.
+- **Alexandra Guadalupe**
+  - Email: 9035@holbertonstudents.com
 
-## Files
-- \`shell.h\`: Header file containing function prototypes, macro definitions, and necessary includes for the shell.
-- \`func_build.c\`: Source file containing implementations of functions related to environment variables and string manipulation.
-- \`search_path.c\`: Source file containing the implementation of a function to search for the full path of a command in the PATH environment variable.
-- \`simple_shell.c\`: Main source file containing the implementation of the main shell loop and functions to handle commands.
+- **Roger Rosado**
+  - Email: Rogergbusiness34@gmail.com
 
-## Compilation
-To compile the shell, simply run the following command in your terminal:
+- **Saul Vera**
+  - Email: saul.vera787@gmail.com
 
-\`\`\`bash
-gcc -Wall -Werror -Wextra -pedantic *.c -o shell
-\`\`\`
+## Description
 
-## Usage
-After compilation, you can run the shell by executing the compiled binary:
+The repository contains the following source and header files:
 
-\`\`\`bash
-./shell
-\`\`\`
+### shell.h
 
-Once the shell is running, you can enter commands just like in a regular shell. Some built-in commands are also available:
-- \`env\`: Print the environment variables.
-- \`exit\`: Exit the shell.
+Header file containing function prototypes and macro definitions used throughout the shell program.
 
-## Example
-\`\`\`
+- **print_env**: Prints the environment variables.
+- **str_cmp**: Compares up to a specified number of characters of two strings.
+- **_getenv**: Retrieves the value of an environment variable.
+- **main**: Entry point of the shell program.
+- **read_command**: Reads and tokenizes user input.
+- **print_not_found**: Prints a message when a command is not found in the PATH.
+- **call_command**: Calls a command, handling execution using fork and execve.
+- **execute_command**: Executes a command.
+- **search_path**: Finds the full path of a command.
+
+### func_build.c
+
+Source file containing implementations of functions declared in shell.h.
+
+- **print_env**: Implementation of printing environment variables.
+- **str_cmp**: Implementation of string comparison function.
+- **_getenv**: Implementation of retrieving environment variables.
+- **search_path**: Implementation of finding the full path of a command.
+
+### simple_shell.c
+
+Source file containing the main function and implementations of functions declared in shell.h.
+
+- **main**: Entry point of the shell program.
+- **read_command**: Reads and tokenizes user input.
+- **print_not_found**: Prints a message when a command is not found in the PATH.
+- **call_command**: Calls a command, handling execution using fork and execve.
+- **execute_command**: Executes a command.
+
+## How to Use
+
+To use the simple shell, compile the source files and run the resulting executable. The shell will provide a prompt where you can enter commands.
+
+```bash
+$ gcc -Wall -Werror -Wextra -pedantic *.c -o shell
 $ ./shell
-simple_shell$ ls
-README.md  func_build.c  search_path.c  shell  shell.h  simple_shell.c
-simple_shell$ env
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-PWD=/home/user/simple_shell
-...
-simple_shell$ exit
-$
-\`\`\`
-EOF
-}
 
