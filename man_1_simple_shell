@@ -1,58 +1,37 @@
 .TH SHELL_FUNCTIONS 1 "April 22, 2024" "Holberton Coding School" "Shell Commands Manual"
 
-.SH NAME
-shell_functions \- Manual for Shell Functions and Signal Handler
+.SH NAME:
+	.B simple_shell
 
-.SH SYNOPSIS
-.B shell_functions
+.SH SYNOPSIS:
+	.B simple_shell - a simple UNIX command interpreter
 
-.SH DESCRIPTION
-.LP
-This manual documents various functions and a signal handler used in a simple shell program.
+.SH DESCRIPTION:
+	.B A shell is a command-line interpreter that provides a user interface for access to
+	.B	an operating system's services. It allows users to interact with the operating system
+	.B	by typing commands and receiving output. Shells are fundamental components of
+	.B	Unix-like operating systems, such as Linux and macOS, and they are also present in Windows.
 
-.B Signal Handler
-.P
-The signal handler function, \fBsigintH\fR, handles the SIGINT signal (Ctrl+C) by writing a custom prompt to standard error (\fBstderr\fR).
+.SH COMMANDS:
+	.B ls -l - Prints a long and detailed list of all the files in the directory.
 
-.B String Functions
-.P
-The following functions are used for string manipulation:
-.TP
-.B str_concat
-Concatenates two strings and returns a pointer to the concatenated string.
+	.B pwd - Puts the current working directory.
 
-.TP
-.B _realloc
-Custom memory reallocation function to resize dynamically allocated memory blocks.
+	.B cat - concatenates and displays the content of text files to standard output.
 
-.B Tokenization Functions
-.P
-These functions tokenize input strings based on specific delimiters:
-.TP
-.B hsh_tokenizer
-Tokenizes input strings using a delimiter and returns an array of tokens.
+	.B ./simple_shell - Run a shell on interactive mode.
 
-.TP
-.B tokenizer_path
-Tokenizes input strings using a different delimiter and returns an array of tokens.
+	.B echo "/bin/ls" | ./simple_shell - Run a shell on non-interactive mode.
 
-.B Input Validation Function
-.P
-The \fBvalidate_input\fR function validates user input arguments and checks for the existence of specified files.
+	.B Ctrl + D - exits the program.
 
-.B Space Validation Function
-.P
-The \fBvalidate_spaces\fR function checks if a given input string contains only whitespace characters.
+.SH BUILT_IN:
+	.B exit - command to exit the program.
 
-.SH SEE ALSO
-.BR signal (7),
-.BR malloc (3),
-.BR strtok (3)
+.SH BUGS:
+	.B No known bugs
 
-.SH AUTHOR
-Roger Rosado \fI<Rogergbusiness34@gmail.com>\fR
-.P
- \fI <>\fR
-.P
- \fI<>\fR
-
+.SH AUTHORS:
+	.B Alexandra Guadalupe <9035@holbertonstudents.com>,
+	.B Saul Vera <saul.vera787@gmail.com>,
+	.B Roger Rosado <
