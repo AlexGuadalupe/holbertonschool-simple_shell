@@ -1,78 +1,60 @@
-# Shell Functions README
+# Simple Shell Project
 
-This repository contains several C functions that are useful for building a simple shell program. These functions handle tasks such as tokenizing input strings, validating user input, string manipulation, and signal handling.
+This is a simple shell project developed as part of a Holberton School curriculum. It provides a basic shell interface for users to execute commands.
 
-## Files
+## Contributors
 
-1. **shell.h**: Header file containing function declarations and necessary includes.
-2. **helper_functions.c**: This code defines a signal handler for Ctrl+C interrupts in a shell program, along with functions for string concatenation and custom memory reallocation.
-3. **tokenizers.c**: This code defines two functions, hsh_tokenizer and tokenizer_path, which tokenize input strings based on specific delimiters and return arrays of tokens.
-4. **validators.c**: This code comprises two functions, validate_input and validate_spaces, used for input validation in a shell program. The validate_input function checks if specified files exist in the system or in the PATH environment variable, while validate_spaces verifies if an input string contains only whitespace characters. 
-5. **README.md**: This README file.
-6. **man_1_simple_shell**: This is a manual page.
-7. **AUTORS**: This file lists all contributors to the repository.
+- **Alexandra Guadalupe**
+  - Email: 9035@holbertonstudents.com
 
-## Functions
+- **Roger Rosado**
+  - Email: Rogergbusiness34@gmail.com
 
-### 1. `hsh_tokenizer`
+- **Saul Vera**
+  - Email: saul.vera787@gmail.com
 
-- **Description**: Tokenizes input strings based on a specific delimiter.
-- **Parameters**: 
-  - `char *input`: Input string to be tokenized.
-- **Return**: Array of tokens.
+## Description
 
-### 2. `tokenizer_path`
+The repository contains the following source and header files:
 
-- **Description**: Tokenizes input strings based on a different delimiter than `hsh_tokenizer`.
-- **Parameters**: 
-  - `char *input`: Input string to be tokenized.
-- **Return**: Array of tokens.
+### shell.h
 
-### 3. `validate_input`
+Header file containing function prototypes and macro definitions used throughout the shell program.
 
-- **Description**: Validates user input arguments and checks for the existence of specified files.
-- **Parameters**: 
-  - `char **arguments`: Array of input arguments.
-- **Return**: Validated input or error message.
+- **print_env**: Prints the environment variables.
+- **str_cmp**: Compares up to a specified number of characters of two strings.
+- **_getenv**: Retrieves the value of an environment variable.
+- **main**: Entry point of the shell program.
+- **read_command**: Reads and tokenizes user input.
+- **print_not_found**: Prints a message when a command is not found in the PATH.
+- **call_command**: Calls a command, handling execution using fork and execve.
+- **execute_command**: Executes a command.
+- **search_path**: Finds the full path of a command.
 
-### 4. `validate_spaces`
+### func_build.c
 
-- **Description**: Checks if a given input string contains only whitespace characters.
-- **Parameters**: 
-  - `char *input`: Input string to be validated.
-- **Return**: Flag indicating presence of spaces.
+Source file containing implementations of functions declared in shell.h.
 
-### 5. `sigintH`
+- **print_env**: Implementation of printing environment variables.
+- **str_cmp**: Implementation of string comparison function.
+- **_getenv**: Implementation of retrieving environment variables.
+- **search_path**: Implementation of finding the full path of a command.
 
-- **Description**: Signal handler for SIGINT (Ctrl+C) that writes a custom prompt after interruption.
-- **Parameters**: 
-  - `int signum`: Signal number.
-- **Return**: None.
+### simple_shell.c
 
-### 6. `str_concat`
+Source file containing the main function and implementations of functions declared in shell.h.
 
-- **Description**: Concatenates two strings and returns a pointer to the concatenated string.
-- **Parameters**: 
-  - `char *s1`: First string.
-  - `char *s2`: Second string.
-- **Return**: Pointer to the concatenated string.
+- **main**: Entry point of the shell program.
+- **read_command**: Reads and tokenizes user input.
+- **print_not_found**: Prints a message when a command is not found in the PATH.
+- **call_command**: Calls a command, handling execution using fork and execve.
+- **execute_command**: Executes a command.
 
-### 7. `_realloc`
+## How to Use
 
-- **Description**: Custom memory reallocation function to resize dynamically allocated memory blocks.
-- **Parameters**: 
-  - `void *ptr`: Pointer to memory block to be reallocated.
-  - `unsigned int old_size`: Old size of the memory block.
-  - `unsigned int new_size`: New size of the memory block.
-- **Return**: Pointer to the reallocated memory.
+To use the simple shell, compile the source files and run the resulting executable. The shell will provide a prompt where you can enter commands.
 
-## Usage
-
-To use these functions in your shell program:
-
-1. Include the `shell.h` header file in your source files.
-2. Implement the necessary logic to call these functions as required by your shell program.
-
-## 
-
+```bash
+$ gcc -Wall -Werror -Wextra -pedantic *.c -o shell
+$ ./shell
 
