@@ -1,4 +1,4 @@
-.TH SHELL_FUNCTIONS 1 "April 22, 2024" "Holberton Coding School" "Shell Commands Manual"
+.TH SHELL_FUNCTIONS 1 "April 26, 2024" "Holberton Coding School" "Shell Commands Manual"
 
 .SH NAME:
 	.B simple_shell
@@ -34,4 +34,4 @@
 .SH AUTHORS:
 	.B Alexandra Guadalupe <9035@holbertonstudents.com>,
 	.B Saul Vera <saul.vera787@gmail.com>,
-	.B Roger Rosado <
+	.B Roger Rosado <Rogergbusiness34@gmail.com>
