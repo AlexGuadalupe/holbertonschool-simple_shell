@@ -50,6 +50,12 @@ Source file containing the main function and implementations of functions declar
 - **call_command**: Calls a command, handling execution using fork and execve.
 - **execute_command**: Executes a command.
 
+### search_path.c
+
+This file contains the implementation of a function search_path which is responsible for finding the full path of a command within the system's PATH environment variable.
+
+- **search_path**:Implementation of finding the full path of a command.
+
 ## How to Use
 
 To use the simple shell, compile the source files and run the resulting executable. The shell will provide a prompt where you can enter commands.
